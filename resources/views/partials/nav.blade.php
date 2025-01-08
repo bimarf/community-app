@@ -1,7 +1,7 @@
 <nav class="navbar navbar-dark navbar-expand-lg bg-primary">
     <div class="container flex justify-content-between">
         <a class="navbar-link" href="{{ route('home') }}">
-            <img class="h-32px" src="{{ url('assets/images/logo.png') }}" alt="Laracuss">
+            <img class="h-32px" src="{{ url('assets/images/logo.png') }}" alt="Media Discuss">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

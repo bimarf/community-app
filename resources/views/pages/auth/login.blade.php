@@ -6,7 +6,7 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-3">
                     <a href="#" class="nav-link mb-5 text-center">
-                        <img class="h-32px" src="{{ url('assets/images/dark-logo.png') }}" alt="Laracuss logo">
+                        <img class="h-32px" src="{{ url('assets/images/dark-logo.png') }}" alt="Media Discuss logo">
                     </a>
                     <div class="card mb-5">
                         <form action="#" method="POST">

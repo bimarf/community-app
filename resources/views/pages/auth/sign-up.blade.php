@@ -6,7 +6,7 @@
             <div class="row pt-5 justify-content-center">
                 <div class="col-12 col-lg-6 my-auto mb-5 mb-lg-auto me-0">
                     <div class="d-none d-lg-block">
-                        <h2>Join the Laracuss Community</h2>
+                        <h2>Join the Media Discuss Community</h2>
                         <p>
                             <ul>
                                 <li>Stuck? Ask in the Discussions</li>
@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-12 col-lg-3 h-100">
                     <a href="#" class="nav-link mb-5 text-center">
-                        <img src="{{ url('assets/images/dark-logo.png') }}" alt="Laracuss logo" class="h-32px">
+                        <img src="{{ url('assets/images/dark-logo.png') }}" alt="Media Discuss logo" class="h-32px">
                     </a>
                     <div class="card mb-5">
                         <form action="#" method="POST">
