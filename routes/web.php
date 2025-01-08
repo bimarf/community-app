@@ -36,3 +36,11 @@ Route::get('discussions/show', function () {
 Route::get('discussions/create', function () {
     return view('pages.discussions.form');
 })->name('discussions.create');
+
+Route::get('answers/create', function () {
+    return view('pages.answers.form');
+})->name('answers.create');
+
+Route::get('users/bimargg', function () {
+    return view('pages.users.show');
+})->name('users.show');
