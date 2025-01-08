@@ -10,10 +10,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-0 mx-lg-3">
                 <li class="nav-item d-block d-lg-none d-xl-block">
-                    <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Home</a>
+                    <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }}" aria-current="page" href="{{ route('home') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="">Discussion</a>
+                    <a class="nav-link {{ Route::currentRouteName() == 'discussions.index' ? 'active' : '' }}" aria-current="page" href="{{ route('discussions.index') }}">Discussion</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-nowrap" aria-current="page" href="">About Us</a>
@@ -29,10 +29,10 @@
             </form>
             <ul class="navbar-nav ms-auto my-2 my-lg-0">
                 <li class="nav-item my-auto">
-                    <a class="nav-link text-nowrap" href="">Log in</a>
+                    <a class="nav-link text-nowrap {{ Route::currentRouteName() == 'login' ? 'active' : '' }}" href="{{ route('login') }}">Log in</a>
                 </li>
                 <li class="nav-item ps-1 pe-0">
-                    <a class="btn btn-primary-white" href="">Sign up</a>
+                    <a class="btn btn-primary-white" href="{{ route('sign-up') }}">Sign up</a>
                 </li>
             </ul>
         </div>
