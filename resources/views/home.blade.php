@@ -52,6 +52,7 @@
             </div>
         </div>
     </nav>
+
     <section class="container hero">
         <div class="row align-items-center h-100">
             <div class="col-12 col-lg-6">
@@ -62,6 +63,26 @@
             </div>
             <div class="col-12 col-lg-6 h-315px order-first order-lg-last mb-3 mb-lg-0">
                 <img class="hero-image float-lg-end" src="{{ url('assets/images/image-hero.png') }}" alt="">
+            </div>
+        </div>
+    </section>
+
+    <section class="container min-h-372px">
+        <div class="row">
+            <div class="col-12 col-lg-4 text-center">
+                <img class="promote-icon mb-2" src="{{ url('assets/images/discussions.png') }}" alt="Discussions">
+                <h2>Discussions</h2>
+                <p class="fs-3">5.1875</p>
+            </div>
+            <div class="col-12 col-lg-4 text-center">
+                <img class="promote-icon mb-2" src="{{ url('assets/images/answers.png') }}" alt="Answers">
+                <h2>Answers</h2>
+                <p class="fs-3">121.984</p>
+            </div>
+            <div class="col-12 col-lg-4 text-center">
+                <img class="promote-icon mb-2" src="{{ url('assets/images/users.png') }}" alt="Users">
+                <h2>Users</h2>
+                <p class="fs-3">11.675</p>
             </div>
         </div>
     </section>
