@@ -26,6 +26,8 @@ Route::middleware('auth')->group(function () {
             ->name('discussions.answer.store');
 
         Route::resource('answers', AnswerController::class)->only(['edit', 'update', 'destroy']);
+        Route::post('answers/{answer}/like', 'LikeController@answerLike')->name('answers.like.like');
+        Route::post('answers/{answer}/unlike', 'LikeController@answerUnlike')->name('answers.like.unlike');
 
     });
 });
