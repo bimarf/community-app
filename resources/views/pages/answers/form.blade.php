@@ -17,16 +17,22 @@
                     <div class="card card-discussions mb-5">
                         <div class="row">
                             <div class="col-12">
-                                <form action="#" method="POST">
-
+                                <form action="{{ route('answers.update', $answer->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
 
                                     <div class="mb-3">
                                         <label for="answer" class="form-label">Answer</label>
-                                        <textarea class="form-control" id="answer" name="answer"></textarea>
+                                        <textarea class="form-control @error('answer') is-invalid @enderror" id="answer" name="answer">{{ $answer->answer ?? old('answer') }}</textarea>
+                                        @error('answer')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                     <div>
                                         <button class="btn btn-primary me-4" type="submit">Submit</button>
-                                        <a href="">Cancel</a>
+                                        <a href="{{ route('discussions.show', $answer->discussion->slug) }}">Cancel</a>
                                     </div>
                                 </form>
                             </div>

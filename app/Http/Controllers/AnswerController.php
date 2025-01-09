@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\Answer\StoreRequest;
+use App\Http\Requests\Answer\UpdateRequest;
 use App\Models\Discussion;
 use App\Models\Answer;
 
@@ -21,6 +22,75 @@ class AnswerController extends Controller
         if ($create) {
             session()->flash('notif.success', 'Your answer posted successfully');
             return redirect()->route('discussions.show', $slug);
+        }
+
+        return abort(500);
+    }
+
+    public function edit(string $id)
+    {
+        $answer = Answer::find($id);
+
+        if (!$answer) {
+            return abort(404);
+        }
+
+        $isOwnedByUser = $answer->user_id == auth()->id();
+
+        if (!$isOwnedByUser) {
+            return abort(404);
+        }
+
+        return response()->view('pages.answers.form', [
+            'answer' => $answer,
+        ]);
+    }
+
+    public function update(UpdateRequest $request, string $id)
+    {
+        $answer = Answer::find($id);
+
+        if (!$answer) {
+            return abort(404);
+        }
+
+        $isOwnedByUser = $answer->user_id == auth()->id();
+
+        if (!$isOwnedByUser) {
+            return abort(404);
+        }
+
+        $validated = $request->validated();
+
+        $update = $answer->update($validated);
+
+        if ($update) {
+            session()->flash('notif.success', 'Answer updated successfully!');
+            return redirect()->route('discussions.show', $answer->discussion->slug);
+        }
+
+        return abort(500);
+    }
+
+    public function destroy(string $id)
+    {
+        $answer = Answer::find($id);
+
+        if (!$answer) {
+            return abort(404);
+        }
+
+        $isOwnedByUser = $answer->user_id == auth()->id();
+
+        if (!$isOwnedByUser) {
+            return abort(404);
+        }
+
+        $delete = $answer->delete();
+
+        if ($delete) {
+            session()->flash('notif.success', 'Answer deleted successfully!');
+            return redirect()->route('discussions.show', $answer->discussion->slug);
         }
 
         return abort(500);

@@ -96,8 +96,8 @@
                                         <a href="javascript:;" data-id="{{ $discussionAnswer->id }}"
                                             data-liked="{{ $discussionAnswer->liked() }}"
                                             class="answer-like d-flex flex-column justify-content-start align-items-center">
-                                            <img src="{{ $discussionAnswer->liked() ? $likedImage : $notLikedImage }}" alt="Like"
-                                                class="like-icon answer-like-icon mb-1">
+                                            <img src="{{ $discussionAnswer->liked() ? $likedImage : $notLikedImage }}"
+                                                alt="Like" class="like-icon answer-like-icon mb-1">
                                             <span
                                                 class="answer-like-count fs-4 color-gray mb-1">{{ $discussionAnswer->likeCount }}</span>
                                         </a>
@@ -122,8 +122,8 @@
 
                                                         <button type="submit"
                                                             class="delete-answer color-gray
-                                                        btn btn-link text-decoration-none p-0 lh-1">
-                                                            <small>Delete</small>
+                                                            btn btn-link text-decoration-none p-0 lh-1">
+                                                            <small class="card-discussion-delete-btn">Delete</small>
                                                         </button>
                                                     </form>
                                                 @endif
@@ -280,31 +280,30 @@
                 var $this = $(this);
                 var id = $this.data('id');
                 var isLiked = $this.data('liked');
-                var likeRoute = isLiked ? '{{ url('') }}/answers/' + id + '/unlike'
-                    : '{{ url('') }}/answers/' + id + '/like';
+                var likeRoute = isLiked ? '{{ url('') }}/answers/' + id + '/unlike' :
+                    '{{ url('') }}/answers/' + id + '/like';
 
                 $.ajax({
-                    method: 'POST',
-                    url: likeRoute,
-                    data: {
-                        '_token': '{{ csrf_token() }}'
-                    }
-                })
-                .done(function(res) {
-                    if (res.status === 'success') {
-                        console.log(res.data);
-                        $this.find('.answer-like-count').text(res.data.likeCount);
-
-                        if (isLiked) {
-                            $this.find('.answer-like-icon').attr('src', '{{ $notLikedImage }}');
+                        method: 'POST',
+                        url: likeRoute,
+                        data: {
+                            '_token': '{{ csrf_token() }}'
                         }
-                        else {
-                            $this.find('.answer-like-icon').attr('src', '{{ $likedImage }}');
-                        }
+                    })
+                    .done(function(res) {
+                        if (res.status === 'success') {
+                            console.log(res.data);
+                            $this.find('.answer-like-count').text(res.data.likeCount);
 
-                        $this.data('liked', !isLiked);
-                    }
-                })
+                            if (isLiked) {
+                                $this.find('.answer-like-icon').attr('src', '{{ $notLikedImage }}');
+                            } else {
+                                $this.find('.answer-like-icon').attr('src', '{{ $likedImage }}');
+                            }
+
+                            $this.data('liked', !isLiked);
+                        }
+                    })
             });
         });
     </script>
