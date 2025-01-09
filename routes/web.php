@@ -44,3 +44,7 @@ Route::get('answers/create', function () {
 Route::get('users/bimargg', function () {
     return view('pages.users.show');
 })->name('users.show');
+
+Route::get('users/bimargg/edit', function () {
+    return view('pages.users.form');
+})->name('users.form');
