@@ -37,14 +37,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::namespace('App\Http\Controllers')->group(function () {
+    Route::get('/', 'HomeController@index')->name('home');
+
     Route::resource(('discussions'), DiscussionController::class)->only(['index', 'show']);
 
     Route::get('discussions/category/{category}', 'CategoryController@show')->name('discussions.categories.show');
 });
-
-Route::get('/', function () {
-    return view('home');
-})->name('home');
 
 Route::middleware('guest')->group(function () {
     Route::namespace('App\Http\Controllers\Auth')->group(function () {
