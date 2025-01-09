@@ -14,6 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/login', [\App\Http\Controllers\Api\LoginController::class, 'login']);
+
+Route::get('/discussions', [\App\Http\Controllers\Api\DiscussionController::class, 'discussions'])->middleware('auth:sanctum');
+
+Route::get('/answers/{id}', [\App\Http\Controllers\Api\AnswerController::class, 'answersByDiscussion'])->middleware('auth:sanctum');
+
+Route::post('/discussions-like', [\App\Http\Controllers\Api\DiscussionController::class, 'discussionLike'])->middleware('auth:sanctum');
+
+Route::post('/answers-like', [\App\Http\Controllers\Api\AnswerController::class, 'answerLike'])->middleware('auth:sanctum');
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
