@@ -18,10 +18,11 @@
                         <div class="row">
                             <div class="col-1 d-flex flex-column justify-content-start align-items-center">
                                 <a id="discussion-like" href="javascript:;">
-                                    <img src="{{ url('assets/images/like.png') }}" alt="Like" id="discussion-like-icon"
+                                    <img src="{{ $discussion->liked() ? $likedImage : $notLikedImage }}" alt="Like" id="discussion-like-icon"
                                         class="like-icon mb-1">
                                 </a>
-                                <span id="discussion-like-count" class="fs-4 color-gray mb-1">3</span>
+                                <span id="discussion-like-count"
+                                    class="fs-4 color-gray mb-1">{{ $discussion->likeCount }}</span>
                             </div>
                             <div class="col-11">
                                 <p>
@@ -36,8 +37,8 @@
                                     <div class="col">
                                         <span class="color-gray me-2">
                                             <a href="#" id="share-discussion">Share</a>
-                                            <input type="text" value="{{ route('discussions.show', $discussion->slug) }}" id="current-url"
-                                                class="d-none">
+                                            <input type="text" value="{{ route('discussions.show', $discussion->slug) }}"
+                                                id="current-url" class="d-none">
                                         </span>
                                     </div>
                                     <div class="col-5 col-lg-3 d-flex">
@@ -49,7 +50,7 @@
                                                 alt="{{ $discussion->user->username }}" class="avatar">
                                         </a>
                                         <div class="fs-12px lh-1">
-                                            <span class="text-primary">
+                                            <span class="text-gray">
                                                 <a href="#" class="fw-bold d-flex align-items-start text-break mb-1">
                                                     {{ $discussion->user->username }}
                                                 </a>
@@ -70,8 +71,8 @@
                         <div class="card card-discussions">
                             <div class="row">
                                 <div class="col-1 d-flex flex-column justify-content-start align-items-center">
-                                    <a id="discussion-like" href="javascript:;">
-                                        <img src="{{ url('assets/images/liked.png') }}" alt="Like"
+                                    <a id="discussion-like" href="javascript:;" data-liked={{ $discussion->liked() }}>
+                                        <img src="{{ url('assets/images/like.png') }}" alt="Like"
                                             id="discussion-like-icon" class="like-icon mb-1">
                                     </a>
                                     <span id="discussion-like-count" class="fs-4 color-gray mb-1">3</span>
@@ -145,7 +146,7 @@
 
                     @guest
                         <div class="fw-bold text-center">Please <a href="{{ route('login') }}" class="text-primary">
-                            sign in</a> or <a href="{{ route('sign-up') }}" class="text-primary">
+                                sign in</a> or <a href="{{ route('sign-up') }}" class="text-primary">
                                 create an account</a> to participate in this discussion.
                         </div>
                     @endguest
@@ -184,6 +185,33 @@
                 var alertContainer = alert.find('.container');
                 alertContainer.first().text("Link copied to clipboard");
             })
+
+            $('#discussion-like').click(function() {
+                var isLiked = $(this).data('liked');
+                var likeRoute = isLiked ? '{{ route('discussions.like.unlike', $discussion->slug) }}' :
+                    '{{ route('discussions.like.like', $discussion->slug) }}';
+
+                $.ajax({
+                        method: 'POST',
+                        url: likeRoute,
+                        data: {
+                            '_token': '{{ csrf_token() }}'
+                        }
+                    })
+                    .done(function(res) {
+                        if (res.status === 'success') {
+                            $('#discussion-like-count').text(res.data.likeCount);
+
+                            if (isLiked) {
+                                $('#discussion-like-icon').attr('src', '{{ $notLikedImage }}');
+                            } else {
+                                $('#discussion-like-icon').attr('src', '{{ $likedImage }}');
+                            }
+
+                            $('#discussion-like').data('liked', !isLiked);
+                        }
+                    })
+            });
         })
     </script>
 @endsection
