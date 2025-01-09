@@ -17,9 +17,15 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('login', function () {
-    return view('pages.auth.login');
-})->name('login');
+Route::namespace('App\Http\Controllers\Auth')->group(function () {
+    Route::get('login', 'LoginController@show')->name('login');
+    Route::post('login', 'LoginController@login')->name('login.post');
+    Route::post('logout', 'LoginController@logout')->name('logout');
+
+    Route::get('sign-up', 'SignUpController@show')->name('sign-up');
+    Route::post('sign-up', 'SignUpController@signUp')->name('sign-up.post');
+
+});
 
 Route::get('sign-up', function () {
     return view('pages.auth.sign-up');
