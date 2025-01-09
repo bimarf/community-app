@@ -17,13 +17,18 @@
                     <div class="card card-discussions mb-5">
                         <div class="row">
                             <div class="col-12">
-                                <form action="{{ route('discussions.store') }}" method="POST">
+                                <form action="{{ isset($discussion) ? route('discussions.update', $discussion->slug)
+                                    : route('discussions.store') }}" method="POST">
                                     @csrf
+
+                                    @isset($discussion)
+                                    @method('PUT')
+                                    @endisset
 
                                     <div class="mb-3">
                                         <label for="title" class="form-label">Title</label>
                                         <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title"
-                                            value="{{ old('title') }}" autofocus>
+                                            value="{{ $discussion->title ?? old('title') }}" autofocus>
 
                                         @error('title')
                                             <div class="invalid-feedback">
@@ -51,7 +56,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="content" class="form-label">Question</label>
-                                        <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" value="{{ old('content') }}"></textarea>
+                                        <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content">{{ $discussion->content ?? old('content') }}</textarea>
                                         @error('content')
                                             <div class="invalid-feedback">
                                                 {{ $message }}

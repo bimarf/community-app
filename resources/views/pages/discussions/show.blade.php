@@ -18,8 +18,8 @@
                         <div class="row">
                             <div class="col-1 d-flex flex-column justify-content-start align-items-center">
                                 <a id="discussion-like" href="javascript:;">
-                                    <img src="{{ $discussion->liked() ? $likedImage : $notLikedImage }}" alt="Like" id="discussion-like-icon"
-                                        class="like-icon mb-1">
+                                    <img src="{{ $discussion->liked() ? $likedImage : $notLikedImage }}" alt="Like"
+                                        id="discussion-like-icon" class="like-icon mb-1">
                                 </a>
                                 <span id="discussion-like-count"
                                     class="fs-4 color-gray mb-1">{{ $discussion->likeCount }}</span>
@@ -40,6 +40,24 @@
                                             <input type="text" value="{{ route('discussions.show', $discussion->slug) }}"
                                                 id="current-url" class="d-none">
                                         </span>
+
+                                        @if ($discussion->user_id === auth()->id())
+                                            <span class="color-gray me-2">
+                                                <a href="{{ route('discussions.edit', $discussion->slug) }}">
+                                                    <small>Edit</small>
+                                                </a>
+                                            </span>
+
+                                            <form action="{{ route('discussions.destroy', $discussion->slug) }}"
+                                                class="d-inline-block lh-1" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="color-gray btn p-0 lh-1"
+                                                    id="delete-discussion">
+                                                    <small class="card-discussion-delete-btn">Delete</small>
+                                                </button>
+                                            </form>
+                                        @endif
                                     </div>
                                     <div class="col-5 col-lg-3 d-flex">
                                         <a href="#"
@@ -211,6 +229,18 @@
                             $('#discussion-like').data('liked', !isLiked);
                         }
                     })
+            });
+
+            $('#delete-discussion').click(function(event) {
+                if (!confirm('Delete this discussion?')) {
+                    event.preventDefault();
+                }
+            });
+
+            $('.delete-answer').click(function(event) {
+                if (!confirm('Delete this answer?')) {
+                    event.preventDefault();
+                }
             });
         })
     </script>
