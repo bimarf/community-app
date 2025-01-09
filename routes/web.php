@@ -39,10 +39,6 @@ Route::namespace('App\Http\Controllers\Auth')->group(function () {
 
 });
 
-Route::get('discussions/show', function () {
-    return view('pages.discussions.show');
-})->name('discussions.show');
-
 Route::get('answers/create', function () {
     return view('pages.answers.form');
 })->name('answers.create');
