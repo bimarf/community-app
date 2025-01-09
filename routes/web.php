@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth')->group(function () {
+    Route::namespace('App\Http\Controllers\My')->group(function () {
+        Route::resource('users', UserController::class)->only(['edit', 'update']);
+    });
+
    Route::namespace('App\Http\Controllers')->group(function () {
        Route::resource('discussions', DiscussionController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
 
@@ -58,10 +62,6 @@ Route::namespace('App\Http\Controllers\Auth')->group(function () {
     Route::post('logout', 'LoginController@logout')->name('logout');
 });
 
-Route::get('users/bimargg', function () {
-    return view('pages.users.show');
-})->name('users.show');
-
-Route::get('users/bimargg/edit', function () {
-    return view('pages.users.form');
-})->name('users.form');
+Route::namespace('App\Http\Controllers\My')->group(function () {
+    Route::resource('users', UserController::class)->only(['show']);
+});
