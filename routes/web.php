@@ -42,14 +42,20 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::middleware('guest')->group(function () {
+    Route::namespace('App\Http\Controllers\Auth')->group(function () {
+        Route::get('login', 'LoginController@show')->name('login');
+        Route::post('login', 'LoginController@login')->name('login.post');
+        Route::post('logout', 'LoginController@logout')->name('logout');
+
+        Route::get('sign-up', 'SignUpController@show')->name('sign-up');
+        Route::post('sign-up', 'SignUpController@signUp')->name('sign-up.post');
+
+    });
+});
+
 Route::namespace('App\Http\Controllers\Auth')->group(function () {
-    Route::get('login', 'LoginController@show')->name('login');
-    Route::post('login', 'LoginController@login')->name('login.post');
     Route::post('logout', 'LoginController@logout')->name('logout');
-
-    Route::get('sign-up', 'SignUpController@show')->name('sign-up');
-    Route::post('sign-up', 'SignUpController@signUp')->name('sign-up.post');
-
 });
 
 Route::get('users/bimargg', function () {
