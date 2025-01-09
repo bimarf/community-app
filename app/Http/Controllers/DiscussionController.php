@@ -77,6 +77,14 @@ class DiscussionController extends Controller
     {
         $discussion = Discussion::with(['user', 'category'])->where('slug', $slug)->first();
 
+        if (!$discussion) {
+            return abort(404);
+        }
+
+        $discussionAnswers = Answer::where('discussion_id', $discussion->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+
         $notLikedImage = url('assets/images/like.png');
         $likedImage = url('assets/images/liked.png');
 
@@ -85,6 +93,7 @@ class DiscussionController extends Controller
             'categories' => Category::all(),
             'likedImage' => $likedImage,
             'notLikedImage' => $notLikedImage,
+            'discussionAnswers' => $discussionAnswers
         ]);
     }
 
