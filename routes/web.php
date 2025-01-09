@@ -22,6 +22,11 @@ Route::middleware('auth')->group(function () {
         Route::post('discussions/{discussion}/unlike', 'LikeController@discussionUnlike')
             ->name('discussions.like.unlike');
 
+        Route::post('discussions/{discussion}/answer', 'AnswerController@store')
+            ->name('discussions.answer.store');
+
+        Route::resource('answers', AnswerController::class)->only(['edit', 'update', 'destroy']);
+
     });
 });
 
@@ -44,10 +49,6 @@ Route::namespace('App\Http\Controllers\Auth')->group(function () {
     Route::post('sign-up', 'SignUpController@signUp')->name('sign-up.post');
 
 });
-
-Route::get('answers/create', function () {
-    return view('pages.answers.form');
-})->name('answers.create');
 
 Route::get('users/bimargg', function () {
     return view('pages.users.show');

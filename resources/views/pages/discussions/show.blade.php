@@ -161,7 +161,22 @@
                             </div>
                         </div>
                     </div>
-
+                    @auth
+                        <h3 class="mb-5">
+                            Your Answer
+                        </h3>
+                        <div class="card card-discussions">
+                            <form action="{{ route('discussions.answer.store', $discussion->slug) }}" method="POST">
+                                @csrf
+                                <div class="mb-3">
+                                    <textarea name="answer" id="answer">{{ old('answer') }}</textarea>
+                                </div>
+                                <div>
+                                    <button class="btn btn-primary me-4" type="submit">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    @endauth
                     @guest
                         <div class="fw-bold text-center">Please <a href="{{ route('login') }}" class="text-primary">
                                 sign in</a> or <a href="{{ route('sign-up') }}" class="text-primary">
@@ -190,6 +205,23 @@
 @section('after-script')
     <script>
         $(document).ready(function() {
+            $('#answer').summernote({
+                placeholder: 'Write your solution here',
+                tabSize: 2,
+                height: 220,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link']],
+                    ['view', ['codeview', 'help']],
+                ]
+            });
+
+            $('span.note-icon-caret').remove();
+
             $("#share-discussion").on('click', function() {
                 var copyText = $('#current-url');
 
